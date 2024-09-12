@@ -7,4 +7,7 @@ function greet() {
 greet()
 let a = "helo"
 let b = "hed"
- 
+
+sort(a)
+console.log(a)
+a.slice

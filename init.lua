@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-                                       			{ out, "WarningMsg" },
+			{ out, "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -16,9 +16,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 vim.g.maplocalleader = "\\"
-require("vim-options")
--- Setup lazy.nvim
-require("lazy").setup("plugins")
 
--- -- treesitter initialization
+vim.g.mapleader = " "
+vim.cmd("set expandtab")
+vim.cmd("set tabstop=4")
+vim.cmd("set softtabstop=4")
+vim.cmd("set shiftwidth=4")
+require("lazy").setup("plugins")
 
