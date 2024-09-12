@@ -21,11 +21,8 @@ return {
             local luasnip = require("luasnip")
 
             local lspkind = require("lspkind")
-            --local cmp_nvim_lsp = require("cmp_nvim_lsp")
-            -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
             require("luasnip.loaders.from_vscode").lazy_load()
-            --local capabilities = vim.lsp.protocol.make_client_capabilities()
-            --capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+            vim.opt.shortmess:append("c")
             cmp.setup({
                 completion = {
                     completeopt = "menu,menuone,preview,noselect",
@@ -47,8 +44,26 @@ return {
                 -- sources for autocompletion
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
-                }),
+                    { name = "path" },
 
+                    { name = "buffer" },
+                    { name = "luasnip" },
+                }),
+                vim.keymap.set({ "i", "s" }, "<c-k>", function()
+                    if luasnip.expand_or_jumpable() then
+                        luasnip.expand_or_jump()
+                    end
+                end, { silent = true }),
+
+                vim.keymap.set({ "i", "s" }, "<c-j>", function()
+                    if luasnip.expand_or_jumpable(-1) then
+                        luasnip.expand_or_jump(-1)
+                    end
+                end, { silent = true }),
+                luasnip.config.set_config({
+                    history = false,
+                    updateevents = "TextChanged,TextChangedI",
+                }),
                 -- configure lspkind for vs-code like pictograms in completion menu
                 formatting = {
                     format = lspkind.cmp_format({
