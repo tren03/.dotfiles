@@ -19,7 +19,7 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
-			require("mason-lspconfig").setup({ ensure_installed = { "lua_ls", "gopls", "ts_ls" } })
+			require("mason-lspconfig").setup({ ensure_installed = { "lua_ls", "gopls", "ts_ls", "clangd" } })
 		end,
 	},
 	-- hooks up neovim to the language server
@@ -29,19 +29,24 @@ return {
 			local lspconfig = require("lspconfig")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			lspconfig.gopls.setup({
-				capabilities = capabilities
+				capabilities = capabilities,
 			})
 			lspconfig.ts_ls.setup({
-				capabilities = capabilities
+				capabilities = capabilities,
 			})
 			lspconfig.lua_ls.setup({
-				capabilities = capabilities
+				capabilities = capabilities,
 			})
-
+			lspconfig.clangd.setup({
+				cmd = { "clangd", "--query-driver=/usr/bin/g++" },
+				capabilities = capabilities,
+			})
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
-            vim.keymap.set("n", "<C-h>", function() vim.lsp.buf.signature_help() end, {})
+			vim.keymap.set("n", "<C-h>", function()
+				vim.lsp.buf.signature_help()
+			end, {})
 		end,
 	},
 }
