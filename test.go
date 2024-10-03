@@ -4,10 +4,9 @@ import (
 	"fmt"
 )
 
-func main(){
-        fmt.Println("hello world")
-	
+func main() {
+	fmt.Println("hello world")
+
 }
 
-
-// edit  
+// edit
